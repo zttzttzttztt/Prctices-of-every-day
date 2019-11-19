@@ -1,0 +1,28 @@
+
+import java.util.Scanner;
+public class Main{
+public static void main(String[] args){
+Scanner sc = new Scanner(System.in);
+String s = sc.next();
+int[]num = new int[10];
+num[0] = 0;
+num[1] = 0;
+num[2] = 0;
+num[3] = 0;
+num[4] = 0;
+num[5] = 0;
+num[6] = 0;
+num[7] = 0;
+num[8] = 0;
+num[9] = 0;
+int len = s.length();
+for(int i=0 ;i<len ;i++){
+num[s.charAt(i)-48]++;
+}
+for(int i=0 ;i<10 ;i++){
+if(num[i]!=0){
+System.out.printf("%d:%d\n",i,num[i]);
+}
+}
+}
+}
