@@ -1,0 +1,23 @@
+import java.util.*;
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        while(sc.hasNextInt()){
+            int n=sc.nextInt();
+            int res=n*n*n;
+            int mid=n*n;
+            StringBuffer sb=new StringBuffer();
+            int begin=mid+1-n;
+            int end=mid-1+n;
+            for(;begin<=end;begin+=2){
+                    if(begin==end){
+                        sb.append(begin);
+                        break;
+                    }
+                    sb.append(begin+"+");
+            }
+            System.out.println(sb.toString());
+        }
+        sc.close();
+    }
+}
