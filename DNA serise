@@ -1,0 +1,29 @@
+
+/*解题思路：
+先获取到字符串基因序列str和子串的长度len，其实GC比例最高就是找出现GC的字符串最多的子串。
+因此从下标为0的位置开始遍历，同时统计出现C或者G的个数，用max记录结果子串的起始下标，一旦
+count[i]超过count[max]，就将i赋值给max。最后输出str.substring(max,max+len)。*/
+import java.util.*;
+public class Main{
+public static void main(String[] args){
+Scanner sc=new Scanner(System.in);
+String str=sc.next();
+int len=sc.nextInt();
+int sz=str.length();//字符串总长度
+int[] count=new int[sz-len];
+int max=0;
+for(int i=0;i<sz-len;i++){
+String substr=str.substring(i,i+len);
+for(int j=0;j<len;j++){
+if(substr.charAt(j)=='C'||substr.charAt(j)=='G'){
+count[i]++;
+}
+}
+if(count[max]<count[i]){
+max=i;
+}
+}
+String res=str.substring(max,max+len);
+System.out.println(res);
+}
+}
