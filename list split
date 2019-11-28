@@ -1,0 +1,51 @@
+/* 解析：
+
+创建两个新的头lessHead,greaterHead 和两个新的尾 lessTail, greaterTail
+
+遍历链表，使得小于x的结点连接到lessTail中，大于等于x的结点连接到greaterTail中。
+
+再将lessTail连到greaterHead->next上， 最后让投pHead指向lessHead->next；
+
+注：让greaterTail->next = NULL;*/
+import java.util.*;
+
+
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+
+
+private  static ListNode* partition(ListNode* pHead, int x)
+
+{
+    if (pHead == NULL)
+        return NULL;
+    struct ListNode* lessHead, *lessTail, *greaterHead, *greaterTail;
+    lessHead = lessTail = (ListNode*)malloc(sizeof(struct ListNode));
+    greaterHead = greaterTail = (ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* cur = pHead;
+    while (cur){
+// 小于x的链到lessTail中
+        if (cur->val < x){
+            lessTail->next = cur;
+            lessTail = lessTail->next;
+        }
+        else //大于等于x的链到greaterTail中
+        {
+            greaterTail->next = cur;
+            greaterTail = greaterTail->next;
+        }
+        cur = cur->next;
+    }
+    lessTail->next = greaterHead->next;
+    greaterTail->next = NULL;
+    pHead = lessHead->next;
+    free(lessHead);
+    free(greaterHead);
+    return pHead;
+}
