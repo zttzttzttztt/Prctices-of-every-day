@@ -1,0 +1,20 @@
+/* 2.解题思路
+通过计算前几个月的兔子总数，我们不难发现：以后每个月的兔子总数呈斐波那契数，所以就不难下手--
+用递归的方法解决！！即getTotalCount(monthCount-1)+getTotalCount(monthCount-2)；
+*/
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNextInt()) {
+            int month = in.nextInt();
+            int a = getTotalCount(month);
+            System.out.println(a);
+        }
+    }
+    public static int getTotalCount(int month) {
+        if(month == 1 || month == 2)
+            return 1;
+        return getTotalCount(month-1)+getTotalCount(month-2);
+    }
+}
