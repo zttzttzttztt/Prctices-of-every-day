@@ -1,0 +1,62 @@
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+
+//Mothods one:
+public class Solution {
+    public ListNode Merge(ListNode list1,ListNode list2) {
+        ListNode p1=list1;
+        ListNode p2=list2;
+        ListNode Head=(p1.val>p2.val)?p2:p1;
+        ListNode s=null;
+        while(p1!=null&&p2!=null){
+            if(p1.val<=p2.val){
+                s=p1.next;
+                p1.next=p2;
+                p1=s;
+            }
+            else{
+                s=p2.next;
+                p2.next=p1;
+                p2=s;
+            }
+        }
+        if(p2!=null){
+            s.next=p2;
+        }
+        else if(p1!=null){
+            s.next=p1;
+        }
+        else{
+            s.next=null;
+        }
+        return Head;
+    }
+}
+
+//methods two:
+public class Solution{
+    public ListNode Merge(ListNode list1,ListNode list2) { 
+        if(list1 == null){ 
+            return list2; 
+        }
+        else if(list2 == null){
+                 return list1; 
+                 } 
+    ListNode mHead = null; 
+    if(list1.val < list2.val){ 
+        mHead = list1;
+        list1.next = Merge(list1.next, list2);
+    }
+    else{ 
+        mHead = list2; 
+        list2.next =Merge(list1, list2.next); 
+    } 
+    return mHead; 
+} 
+} 
