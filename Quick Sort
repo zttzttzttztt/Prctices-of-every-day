@@ -1,0 +1,72 @@
+/*可以看到经过第一次排序之后，我们以基准数为标准，把原始数据分成了左右两部分，左边都比基准数小，右边都比基准数大。
+  然后我们把基准数的左边和右边分别取出来，对取出的部分单独进行排序，这样我们以新的基准数为标准把数又分成了两部分，重复上述过程一直到基准数的左右两边最多只有一个元素为止。
+ */
+/* 3.代码实现
+  代码实现包括两种：递归和非递归。两种方式的实现机制其实是一样的。
+  我们可以看到一次排序其实就是以基准数为标准把数组分成左右两部分。我们只要知道一次排完序之后基准数的位置，就能知道新的待排序序列的位置。比如说待排的数组给定了left=0,right=9，我们排好序之后发现基准数下标为5。所以新的待排序列就是0-4和6-9两段，然后对这两段再进行排序，以此循环迭代。
+  我们可以把一次排序过程当成一次划分区间的过程，把它单独写成一个函数，在另外一个函数内只要不停的给定left和right的初始值再调用划分函数即可。
+
+  ξ \xiξ一次快速排序划分过程：*/
+
+int QuickSortSplit(int *nums,int n,int left,int right)//快速排序一次划分
+{
+    if(left<0 || right<=0 || left>n-1 || right>n-1 || left>=right)
+        return -1;
+    int i=left;//左指针
+    int j=right;//右指针
+    int base=nums[left];//基准数
+    while(i!=j)
+    {
+        while(nums[j]>=base && j>i)//移动右指针找到小于基准数的数
+            j--;
+        nums[i]=nums[j];
+        while(nums[i]<=base && j>i)//移动左指针找到大于基准数的数
+            i++;
+        nums[j]=nums[i];
+    }
+    nums[i]=base;//i和j相遇后直接填上基准数
+    return i;//返回基准数下标
+}
+//(1)递归方式
+ // 递归实现就是每次获得基准数id之后，就把新的两段参数的left和right传入函数中，递归调用。
+
+void QuickSortRecursion(int *nums,int n,int left,int right)
+{
+    if(left<0 || right<=0 || left>n-1 || right>n-1 || left>=right)
+        return;
+    int baseid=QuickSortSplit(nums,n,left,right);//一次划分并获得基准数下标
+    if(baseid!=-1)
+    {
+        QuickSortRecursion(nums,n,left,baseid-1);//继续排基准数左边的部分
+        QuickSortRecursion(nums,n,baseid+1,right);//继续排基准数右边的部分
+    }
+}
+
+ // (2)非递归方式
+ // 非递归实现就是用一个栈，每次都将left和right入栈，然后取两次top排一次序，取两次top排一次序，直到栈空为止。
+
+void QuickSortUnRecursion(int *nums,int n,int left,int right)//快速排序非递归调用
+{
+    if(left<0 || right<=0 || left>n-1 || right>n-1 || left>=right)
+        return;
+    stack<int> pos;//定义栈来保存指针对的位置
+    pos.push(right);
+    pos.push(left);
+    while(!pos.empty())
+    {
+        int i=pos.top();//获取左指针
+        pos.pop();
+        int j=pos.top();//获取右指针
+        pos.pop();
+        int baseid=QuickSortSplit(nums,n,i,j);//一次划分并获得基准数下标
+        if(baseid!=-1)
+        {
+            //插入新的左区间
+            pos.push(baseid-1);
+            pos.push(i);
+            //插入新的右区间
+            pos.push(j);
+            pos.push(baseid+1);
+        }
+    }
+    }
