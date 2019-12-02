@@ -1,0 +1,89 @@
+/* 每个输入包含1个测试用例。每个测试用例先给出一个不超过1000的正整数N，随后给出N个不超过1000的待分类的正整数。数字间以空格分隔。
+
+给定一系列正整数，请按要求对数字进行分类，并输出以下5个数字：
+
+A1 = 能被5整除的数字中所有偶数的和；
+
+A2 = 将被5除后余1的数字按给出顺序进行交错求和，即计算n1-n2+n3-n4...；
+
+A3 = 被5除后余2的数字的个数；
+
+A4 = 被5除后余3的数字的平均数，精确到小数点后1位；
+
+A5 = 被5除后余4的数字中最大数字。
+*/
+import java.util.Scanner;
+import java.math.BigDecimal;
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String[] str = sc.nextLine().split(" ");
+        int[] nums = new int[str.length-1];
+        for(int i = 0,j=1;i<str.length-1;i++,j++){
+            nums[i] = Integer.parseInt(str[j]);
+        }
+        outResult(nums);
+    }
+    public static void outResult(int[] nums){
+        Integer A1 = 0;
+        Integer A2 = 0;
+        int A2num = 0;
+        int A3 = 0;
+        int A4num = 0;
+         double A4sum = 0;
+        double A4 = 0;
+        int A5= 0;
+        int temp = 1;
+        String result = "";
+        for(int i = 0;i<nums.length;i++){
+            if(nums[i]%5==0&&nums[i]%2==0){
+                A1+=nums[i];
+            }
+            if(nums[i]%5==1){
+                A2+=temp*nums[i];
+                temp = 0-temp;
+                A2num++;
+            }
+            if(nums[i]%5==2){
+                A3++;
+            }
+            if(nums[i]%5==3){
+                A4num++;
+                A4sum+=nums[i];
+            }
+            if(nums[i]%5 == 4){
+                if(nums[i]>A5){
+                    A5 = nums[i];
+                }
+            }
+        }
+        if(A1!=0){
+            result+=(A1+" ");
+        }else{
+            result+=("N"+" ");
+        }
+        if(A2num!=0){
+            result+=(A2+" ");
+        }else{
+            result+=("N"+" ");
+        }
+        if(A3!=0){
+            result+=(A3+" ");
+        }else{
+            result+=("N"+" ");
+        }
+         if(A4num!=0){
+             A4 = A4sum/A4num;
+             BigDecimal   b   =   new   BigDecimal(A4);   
+            result+=( b.setScale(1,   BigDecimal.ROUND_HALF_UP).doubleValue()+" ");
+        }else{
+            result+=("N"+" ");
+        }
+         if(A5!=0){
+            result+=A5;
+        }else{
+            result+="N";
+        }
+        System.out.print(result);
+    }
+}
