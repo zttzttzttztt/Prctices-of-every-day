@@ -1,0 +1,80 @@
+/* 归并排序的原理其实就是先分解再合并，将原始数组不断折半拆分，直到拆到不能分；然后开始两个块合并成一个块，
+不断地合并直到把所有块合并好。下图是原理演示，绿色部分就是拆分过程，蓝色部分就是结合过程。
+https://img-blog.csdn.net/20180928224954516?
+拆分的原理很简单，就是折半拆分。
+  结合的时候原理如下，两个数组都从头开始比较，每次都挑出较小的数加入到新数组中，被挑选的数字指针右移。
+  这样一直比较，直到某个数组被遍历完，然后把没被遍历完的数组剩下的数字全部补到新数组中，这样新数组就是
+  两个数组的排序组合了。我称下图为归并排序的一次子数组结合过程。
+  */
+  /*.代码实现
+  归并排序的实现过程其实和快速排序非常类似，它也分成递归和非递归两种，递归的方法就直接切割区间然后组合排序，非递归的方法就用栈来保存需要操作的切割区间然后组合排序。
+  在用代码实现之前有几个前提我们要清楚：
+  1.归并排序的切割和结合过程是正好对应的，也就是说我们给定数组下标头和尾分别是5和8，那切割过程就知道要切成5-6、7-8这两个子数组，结合过程就知道要去结合5-6、7-8这两个子数组。所以我的代码中并没有传递mid这个参数，我只传了头和尾。
+  2.归并排序跟上面的其他排序不同，不是在原数组内不停地进行交换，而是按照图二的方式把两个子数组结合。所以我们需要一个新的数组来保存每次子数组结合的结果，再把这个结果覆盖到原数组去。容易想到每次在子数组结合函数内申请last-first+1这么大的空数组来接受组合结果，即需要结合的两个子数组数据量之和。
+  这样存在的问题就是，如果我们每次都在组合的时候再新建数组，时间的开销会非常大，尤其是数组数的个数很多时。解决的办法就是事先定义好一个跟原始数据一样大的空数组arr(因为最后一次结合的结果正好是原始数据大小)，每次作为参数传递过去。
+
+  我们先用代码实现子数组结合过程。
+  ξ \xiξ一次归并排序子数组结合过程：
+  */
+
+void MergeSortCombine(int *nums,int *arr,int first,int last)//归并排序一次结合过程
+{
+    int mid=(last-first)/2+first;
+    int i=first;//数组一的头部
+    int j=mid+1;//数组二的头部
+    int k=0;//新数组的头部
+    while(i<=mid && j<=last)//实现图二的结合排序过程
+        arr[k++]=nums[i]<nums[j]?nums[i++]:nums[j++];
+    while(i<=mid)//如果数组一还没遍历完
+        arr[k++]=nums[i++];
+    while(j<=last)//如果数组二还没遍历完
+        arr[k++]=nums[j++];
+    for(int m=0;m<k;m++)//将遍历完的结果覆盖到原数组
+}
+
+  //(1)递归实现方法
+  //有了结合过程我们只要不停的划分区间，然后把区间传递给结合函数，结合函数就会自动对区间进行排序了。
+
+void MergeSortRecursion(int *nums,int *arr,int first,int last)//归并排序递归实现方法
+{
+    if (first>=last)
+        return;
+    int mid=(last-first)/2+first;
+    MergeSortRecursion(nums,arr,first,mid);//继续拆分左边部分
+    MergeSortRecursion(nums,arr,mid+1,last);//继续拆分右边部分
+    MergeSortCombine(nums,arr,first,last);//进行一次结合排序
+}
+  //(2)非递归实现方法
+  //非递归方法的想法就是我们把划分出来的区间全部存到栈里，每次都从栈里取一组数进行结合，这样不停的结合下去就是最后的排序结果了。
+
+void MergeSortUnRecursion(int *nums,int *arr,int first,int last)//归并排序非递归实现方法
+{
+    if (first>=last)
+        return;
+    stack<int> pos1;//pos1用于不断划分子区间
+    stack<int> pos2;//pos2用于保存需要排序的子区间
+    pos1.push(first);pos1.push(last);
+    pos2.push(first);pos2.push(last);
+    while(!pos1.empty())//不断划分子区间并保存
+    {
+        int j=pos1.top();pos1.pop();
+        int i=pos1.top();pos1.pop();
+        int mid=(j-i)/2+i;
+        if(mid>i)
+        {
+            pos1.push(i);pos1.push(mid);
+            pos2.push(i);pos2.push(mid);
+        }
+        if(j>mid+1)
+        {
+            pos1.push(mid+1);pos1.push(j);
+            pos2.push(mid+1);pos2.push(j);
+        }
+    }
+    while(!pos2.empty())//对保存的每个区间进行结合排序
+    {
+         int j=pos2.top();pos2.pop();
+         int i=pos2.top();pos2.pop();
+         MergeSortCombine(nums,arr,i,j);
+    }
+}
