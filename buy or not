@@ -1,0 +1,80 @@
+/* 输入格式：
+
+每个输入包含 1 个测试用例。每个测试用例分别在 2 行中先后给出摊主的珠串和小红想做的珠串，两串都不超过 1000 个珠子。
+
+输出格式：
+
+如果可以买，则在一行中输出 Yes 以及有多少多余的珠子；如果不可以买，则在一行中输出 No 以及缺了多少珠子。其间以 1 个空格分隔。
+
+输入样例 1：
+
+ppRYYGrrYBR2258
+
+YrR8RrY
+*/
+import java.util.*;
+import java.lang.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String s=in.nextLine();
+        char[] s1=s.toCharArray();
+        String b=in.nextLine();
+        char[] b1=b.toCharArray();
+        int con2=0;
+        int conshort=0;
+        for(int k=0;k<b1.length;k++){
+            for(int l=0;l<s1.length;l++){
+                if(b1[k]==s1[l]){
+                    conshort++;break;
+                }
+            }
+           
+        }
+        if(conshort==b1.length){
+            int j=s1.length-conshort;
+            System.out.println("Yes "+j);
+        }
+        else{
+            int i=b1.length-conshort;
+            System.out.println("No "+i);
+        }
+    }
+}
+
+
+//方法二：
+
+//mothod two:
+import java.util.Scanner;
+public class Main {
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+Scanner sc=new Scanner (System.in);
+String a=sc.nextLine();
+String ar=sc.nextLine();
+int c=0;
+int cha=0;
+StringBuffer ab=new StringBuffer(a);
+StringBuffer arb=new StringBuffer(ar);
+for(int i=0;i<arb.length();i++) {
+ int b=0;
+ for(int j=0;j<ab.length();j++) {   
+ if(arb.charAt(i)==ab.charAt(j)) {
+ c++;
+ b++;
+ ab.deleteCharAt(j);   
+ break;
+ }     
+ }
+ if(b==0) {
+ cha++;
+ }
+}
+if(c==arb.length()) {
+ System.out.print("Yes"+" "+(a.length()-arb.length()));
+}else {
+ System.out.print("No"+" "+(cha));
+}
+}
+}
