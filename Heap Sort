@@ -1,0 +1,41 @@
+/*我们把一个节点的调整过程单独写成一个函数。过程也就是看该节点的左右子节点是否有比该节点大的，
+如果有，就把子节点中较大数和父节点交换。交换完之后再看子节点树是否平衡，如果不平衡就接着调整子树，
+直到子树平衡或者到达叶节点。
+*/
+void SetOneNode(int *nums,int n,int node)//调整堆中某一个节点直到平衡
+{
+    if(2*node+1>n-1)//本身是叶节点
+        return;
+    int index=0;
+    if(2*node+2>n-1)//只有左子节点
+        index=2*node+1;
+    else//左右子节点都存在
+        index=nums[2*node+1]>nums[2*node+2]?2*node+1:2*node+2;//两个子节点中较大数的下标
+    if(nums[index]>nums[node])
+    {
+        int temp=nums[index];
+        nums[index]=nums[node];
+        nums[node]=temp;
+        SetOneNode(nums,n,index);//继续调整子树
+    }
+}
+/*有了调整一个节点直到平衡的代码，我们在初始建堆的时候，需要从最后一个非叶子节点开始调整到堆顶，
+而后每次只需要调整堆顶一个节点就可以了。
+*/
+
+void HeapSort(int *nums,int n)//堆排序过程
+{
+    if(n<=1)
+        return;
+    for(int i=n/2-1;i>=0;i--)//初始建堆，从最后一个非叶节点开始调整
+        SetOneNode(nums,n,i);
+    swap(nums[0],nums[n-1]);//交换堆顶到堆尾
+    int qun=n-1;
+    while(qun)
+    {
+        SetOneNode(nums,qun,0);//只调整堆顶平衡
+        swap(nums[0],nums[qun-1]);//交换堆顶到堆尾
+        qun--;//参加比较的数不断减少
+    }
+}
+
