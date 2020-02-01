@@ -1,0 +1,36 @@
+public class Solution{
+    public  int[] sortArray(int[] num1,int[] num2){
+        int length=num1.length+num2.length;
+        int[] num3=new int[length];
+        int i=0,j=0,k=0;
+        if(num1==null){
+            return num2;
+        }
+        else if(num2==null)
+            return num1;
+        else {
+            while (i< num1.length&& j < num2.length) {
+                if (num1[i] < num2[j]) {
+                    num3[k++] = num1[i++];
+                } else {
+                    num3[k++] = num2[j++];
+                }
+            }
+            while(i<num1.length)
+                num3[k++] = num1[i++];
+            while(j<num2.length)
+                num3[k++] = num2[j++];
+            return num3;
+        }
+    }
+    public static void main(String[] args) {
+        int[]a={1,2,3,4,7,8,9};
+        int[] b={2,3,4,8,9,11,16};
+        Solution  s=new Solution();
+       int[] c= s.sortArray(a,b);
+       System.out.println();
+       for(int i=0;i<c.length;i++){
+           System.out.print(c[i]+"");
+        }
+    }
+}
