@@ -1,0 +1,89 @@
+public class Solution{
+       public int[] SortedSquares(int[] A) {
+           int length = A.length;
+           for (int k = 0; k < length; k++) {
+               A[k] = A[k] * A[k];
+
+           }
+           SelectionSort(A,length);
+
+           return A;
+       }
+    public int[] SortedSquares1(int[] A) {
+        int length = A.length;
+        for (int k = 0; k < length; k++) {
+
+            A[k] = A[k] * A[k];
+
+        }
+        BubbleSort(A,length);
+        return A;
+    }
+
+    private int[] sorted(int[] a) {
+               for (int i = 0; i < a.length - 1; i++) {
+                   int minindex = i;
+                   for (int j = i + 1; j < a.length; j++) {
+                       if (a[j] < minindex) {
+                           minindex = j;
+                       }
+                   }
+                   Swap(a, minindex, i);
+
+               }
+               return a;
+    }
+    void SelectionSort(int[] nums,int n)//选择排序
+    {
+        for(int i=0;i<n-1;i++)//i代表排序次数,一共n-1次
+        {
+            int min_id=i;//每次遍历查找最小数的下标
+            for(int j=i+1;j<n;j++)//j代表遍历下标，每次都从i+1开始，遍历到最后一个数
+            {
+                if(nums[j]<nums[min_id])
+                    min_id=j;
+            }
+            if(min_id!=i)//如果最小数下标和最初位置不等则交换
+            {
+                Swap(nums,min_id,i);
+            }
+        }
+    }
+
+
+    void BubbleSort(int[] nums,int n)//冒泡排序
+    {
+        for(int i=0;i<n-1;i++)//i代表排序次数,一共n-1次
+        {
+            boolean exchange=false;//监督变量，判断一次排序中是否发生了交换事件
+            for(int j=0;j<n-i-1;j++)//j代表每次拿来比较的数的下标，每次都从0开始，上限是n-i-1
+            {
+                if(nums[j]>nums[j+1])
+                {
+                    exchange=true;
+                    int temp=nums[j];
+                    nums[j]=nums[j+1];
+                    nums[j+1]=temp;
+                }
+            }
+            if(!exchange)//如果没有发生交换说明已经排好序了，直接退出
+                break;
+        }
+    }
+
+
+    private void Swap(int[] a, int minindex, int i) {
+           int t=a[minindex];
+           a[minindex]=a[i];
+           a[i]=t;
+    }
+
+    public static void main(String[] args) {
+        int[] a={-2,-1,0,1,2,3,4,5};
+        Solution s=new Solution();
+        a=s.SortedSquares1(a);
+        for(int i=0;i<a.length;i++){
+            System.out.print(a[i]+" ");
+        }
+    }
+}
