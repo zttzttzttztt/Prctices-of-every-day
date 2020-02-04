@@ -1,0 +1,30 @@
+ public class Solution{
+       public String reverseOnlyLetters(String s) {
+           String[] s1= s.split(" ");
+           System.out.println(s1[0]+" "+s1[1]);
+           return Swap(s1[1])+" "+Swap(s1[0]);
+       }
+
+
+       private String Swap(String a) {
+           char[] c =a.toCharArray();
+           int j=0;
+           int k=a.length()-1;
+           //System.out.print(s1);
+           while(j<k){
+               char t=c[j];
+               c[j]=c[k];
+               c[k]=t;
+               k--;
+               j++;
+           }
+           a=c.toString();
+           return  a;
+       }
+
+       public static void main(String[] args) {
+           Solution s=new Solution();
+           String  St="Hello World";
+          System.out.print(s.reverseOnlyLetters(St));
+       }
+   }
