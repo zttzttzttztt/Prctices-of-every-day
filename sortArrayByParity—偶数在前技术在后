@@ -1,0 +1,27 @@
+
+class Solution {
+    public int[] sortArrayByParity(int[] A) {
+       int  L=A.length;
+        int[] b=new int[L];
+        int j=0,k=L-1;
+        for(int i=0;i<L;i++){
+            if(A[i]%2==0){
+                b[j]=A[i];
+                j++;
+            }else{
+                b[k]=A[i];
+                k--;
+            }
+        }
+        return b;
+    }
+
+       public static void main(String[] args) {
+           Solution s=new Solution();
+           int[] a={1,2,3,4,5,6,7,8,9};
+           a=s.sortArrayByParity(a);
+           for(int i=0;i<a.length;i++) {
+               System.out.print(a[i]+" ");
+           }
+       }
+}
