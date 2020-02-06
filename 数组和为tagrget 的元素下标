@@ -1,0 +1,39 @@
+
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] sun=new int[nums.length];
+        int i=0,k=0;
+        int j=nums.length-1;
+        while(i<j){
+            if(nums[i]+nums[j]>target){
+                j--;
+            }
+            else if(nums[i]+nums[j]<target){
+                i++;
+            }else{
+                sun[k++]=i;
+                sun[k++]=j;
+                i++;
+                j--;
+            }
+        }
+        for(int n=0;n<k;n++){
+            System.out.print(sun[n]+" ");
+            if(n%2!=0){
+                System.out.println();
+            }
+        }
+        return sun;
+    }
+
+    public static void main(String[] args) {
+        int[] nums={1,2,3,4,5,6,7};
+        int[] nums1={1,2,3,5,6};
+       int  target2=4;
+        int target=8;
+        Solution s=new Solution();
+        s.twoSum(nums1,target2);
+        System.out.println("-------------");
+        s.twoSum(nums,target);
+    }
+}
