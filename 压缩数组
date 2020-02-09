@@ -1,0 +1,51 @@
+
+
+public class Solution{
+    public int compress(char[] chars) {
+        StringBuffer s=new StringBuffer();
+        int i=0;
+        int j=1;
+        if(chars.length<=1){
+            return chars.length;
+        }else {
+            while (j < chars.length) {
+                if (chars[i] == chars[j]) {
+                    j++;
+                    if (j == chars.length - 1) {
+                        s.append(chars[i]);
+                        s.append(j + 1 - i);
+                    }
+                    System.out.print(0);
+                } else {
+                    s.append(chars[i]);
+                    System.out.print(1);
+                    if (j - i != 1) {
+                        s.append(j - i);
+                        System.out.print(2);
+                    }
+                    i = j;
+                    j = i + 1;
+                }
+            }
+        }
+        chars=s.toString().toCharArray();
+        System.out.println("压缩后：");
+        for(int k=0;k<chars.length;k++){
+            System.out.print(chars[k]+" ");
+        }
+       return s.length();
+    }
+
+    public static void main(String[] args) {
+        Solution s=new Solution();
+        char[] chars={'a','b','b','c','c','c'};
+        char[] chars1={'a'};
+        System.out.println("压缩前：");
+        for(int i=0;i<chars1.length;i++){
+            System.out.print(chars1[i]+" ");
+        }
+        System.out.println();
+      System.out.print("压缩后的长度："+s.compress(chars1));
+
+    }
+}
