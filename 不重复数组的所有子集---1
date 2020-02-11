@@ -1,0 +1,34 @@
+
+class Solution {
+    public static List<List<Integer>> ans = new ArrayList<List<Integer>>();
+    //因为搜完之后并不知道子集合有多少个元素，所以用path有点不合适 //用一个boolean数组来判断某一数字选没选过
+    public static boolean[] v = new boolean[100];
+    public void roboot(int idx, int[] nums) {
+        if (idx >= nums.length) { //record ans
+             List<Integer> temp = new ArrayList<Integer>();
+             for (int i = 0; i <= nums.length; i++) {
+                 if (v[i]) temp.add(nums[i]);
+             }
+             ans.add(temp);
+             return;
+        }
+        //两种情况：idx取、不取
+        v[idx] = true;
+        roboot(idx + 1, nums);
+        v[idx] = false;
+        roboot(idx + 1, nums);
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        ans.clear(); //先把数组排序
+        Arrays.sort(nums);
+        roboot(0, nums);
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        Solution s=new Solution();
+        int[] nums={1,2,3};
+        List list=s.subsets(nums);
+        System.out.println(list);
+    }
+}
