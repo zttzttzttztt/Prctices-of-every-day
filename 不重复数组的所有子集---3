@@ -1,0 +1,34 @@
+class Solution {
+    public List<List<Integer>> subsets1(int[] nums) {
+        List<List<Integer>> list1 = new LinkedList<>();
+        int i = 0;
+        while (i <= nums.length) {
+            int j = 0;
+                while (j < nums.length) {
+                    List<Integer> list = new ArrayList<>();
+                    if(i<nums.length) {
+                        list.add(nums[j]);
+                    }
+                    if (j + i < nums.length && !list.contains(nums[j + i])) {
+                        list.add(nums[j + i]);
+                    }else if (j + i >=nums.length&&i!=nums.length) {
+                        break;
+                    }if(j + i >=nums.length&&i==nums.length){
+                        list1.add(list);
+                        break;
+                    }
+                    j++;
+                    list1.add(list);
+                }
+                i++;
+        }
+        return list1;
+    }
+
+    public static void main(String[] args) {
+        Solution s=new Solution();
+        int[] nums={1,2,3,4};
+        List<List<Integer>> list=s.subsets1(nums);
+        System.out.println(list);
+    }
+}
