@@ -1,0 +1,54 @@
+public class Solution{
+    public static void main(String[] args) {
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        int m=s.nextInt();
+        int [] nums=new int[n];
+        for(int i=0;i<n;i++){
+            nums[i]=s.nextInt();
+        }
+        SelectionSort(nums,n);
+        for(int i=0;i<m;i++){
+            System.out.print(nums[i]);
+        }
+    }
+//冒泡排序
+static void BubbleSort(int[] nums,int n)//冒泡排序
+{
+    for(int i=0;i<n-1;i++)//i代表排序次数,一共n-1次
+    {
+        boolean exchange=false;//监督变量，判断一次排序中是否发生了交换事件
+        for(int j=0;j<n-i-1;j++)//j代表每次拿来比较的数的下标，每次都从0开始，上限是n-i-1
+        {
+            if(nums[j]>nums[j+1])
+            {
+                exchange=true;
+                int temp=nums[j];
+                nums[j]=nums[j+1];
+                nums[j+1]=temp;
+            }
+        }
+        if(!exchange)//如果没有发生交换说明已经排好序了，直接退出
+            break;
+    }
+}
+//选择排序
+    static void SelectionSort(int[]nums,int n)//选择排序
+    {
+        for(int i=0;i<n-1;i++)//i代表排序次数,一共n-1次
+        {
+            int min_id=i;//每次遍历查找最小数的下标
+            for(int j=i+1;j<n;j++)//j代表遍历下标，每次都从i+1开始，遍历到最后一个数
+            {
+                if(nums[j]<nums[min_id])
+                    min_id=j;
+            }
+            if(min_id!=i)//如果最小数下标和最初位置不等则交换
+            {
+                int temp=nums[i];
+                nums[i]=nums[min_id];
+                nums[min_id]=temp;
+            }
+        }
+    }
+}
