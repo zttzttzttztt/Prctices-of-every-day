@@ -1,0 +1,60 @@
+
+public class  Solution{
+    public  Map  codeSet(String s){
+        Map map=new HashMap();
+        int i=0;
+        while(i<s.length()){
+            if(!map.containsKey(s.charAt(i))){
+                map.put(s.charAt(i),1);
+            }
+            i++;
+        }
+        return map;
+    }
+
+
+
+    public List<Character> codeSet1(String s){
+       List<Character> list=new ArrayList<>();
+       int count=0;
+        int i=0;
+        while(i<s.length()){
+            if(!list.contains(s.charAt(i))){
+                list.add(s.charAt(i));
+                count++;
+            }
+            i++;
+        }
+        return list;
+    }
+    public String codeSet2(String s){
+        StringBuffer s1=new StringBuffer();
+        int i=0;
+        while(i<s.length()) {
+            if (!contained(s1, s.charAt(i))) {
+                s1.append(s.charAt(i));
+            }
+
+            i++;
+        }
+        return s1.toString();
+    }
+    static boolean contained(StringBuffer s,char c){
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)==c){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        Solution s=new Solution();
+        String s1="abcqweracb";
+        System.out.println("正确答案："+"   abcqwer");
+        System.out.println("我的结果：");
+        System.out.println(s.codeSet(s1));
+        System.out.println(s.codeSet1(s1));
+        System.out.println(s.codeSet2(s1));
+    }
+}
