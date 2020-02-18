@@ -1,0 +1,102 @@
+class ListNode{
+int val;
+ListNode next;
+ListNode(int val,ListNode next){
+    this.val=val;
+    this.next=next;
+}
+}
+public class Solution {
+    public ListNode Merge(ListNode list1, ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        ListNode mergeHead = null;
+        ListNode current = null;
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                if (mergeHead == null) {
+                    mergeHead = current = list1;
+                } else {
+                    current.next = list1;
+                    current = current.next;
+                }
+                list1 = list1.next;
+            } else {
+                if (mergeHead == null) {
+                    mergeHead = current = list2;
+                } else {
+                    current.next = list2;
+                    current = current.next;
+                }
+                list2 = list2.next;
+            }
+        }
+        if (list1 == null) {
+            current.next = list2;
+        } else {
+            current.next = list1;
+        }
+        return mergeHead;
+    }
+
+    public static void main(String[] args) {
+        Solution s=new Solution();
+
+        ListNode s1=new ListNode(0,null);
+        ListNode s2=new ListNode(1,null);
+        ListNode s3=new ListNode(2,null);
+        ListNode s4=new ListNode(4,null);
+        ListNode s5=new ListNode(5,null);
+
+        ListNode c1=new ListNode(6,null);
+        ListNode c2=new ListNode(7,null);
+        ListNode c3=new ListNode(8,null);
+        ListNode c4=new ListNode(9,null);
+        ListNode c5=new ListNode(10,null);
+        ListNode list=new ListNode(11,null);
+        ListNode list1=new ListNode(12,null);
+       list.next=s1;
+       list.val=s1.val;
+       s1.next=s2;
+       s1.val=s2.val;
+       s2.next=s3;
+       s2.val=s3.val;
+       s3.next=s4;
+       s3.val=s4.val;
+       s4.next=s5;
+       s4.val=s5.val;
+
+
+        list1.next=c1;
+        list1.val=c1.val;
+        c1.next=c2;
+        c1.val=c2.val;
+        c2.next=c3;
+        c2.val=c3.val;
+        c3.next=c4;
+        c3.val=c4.val;
+        c4.next=c5;
+        c4.val=c5.val;
+        ListNode p=list;
+        ListNode q=list1;
+      while(p!=null){
+            System.out.print(p.val);
+            p=p.next;
+        }
+        System.out.println();
+        while(q!=null){
+            System.out.print(q.val);
+            q=q.next;
+        }
+        System.out.println();
+ListNode L1=s.Merge(list,list1);
+        while(L1!=null){
+            System.out.print(L1.val);
+            L1=L1.next;
+        }
+    }
+}
