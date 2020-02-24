@@ -1,0 +1,38 @@
+ void InsertionSort(int[] nums,int n)//插入排序 从小到大
+    {
+        for(int i=1;i<n;i++)//i代表选取数的下标
+        {
+            for(int j=i;j>0;j--)//j代表从i-1开始比较，直到找到合适位置
+            {
+                if(nums[j]<nums[j-1])//如果选取数比当前数小则交换
+                {
+                    int temp=nums[j-1];
+                    nums[j-1]=nums[j];
+                    nums[j]=temp;
+                }
+                else//如果选取数不比当前数小
+                    break;
+            }
+        }
+    }
+
+    //插入排序  从小到大
+    void InsertionSort1(int[] a,int n){
+        for(int i=1;i<n;i++){
+            insert(a,i-1,i);
+        }
+    }
+
+    private void insert(int[] a, int i, int i1) {
+        while(i>=0&&i1<a.length){
+            if(a[i]>a[i1]){
+                int t=a[i1];
+                a[i1]=a[i];
+                a[i]=t;
+                insert(a,i-1,i);    //递归遍历
+            }
+            else
+                break;
+        }
+
+    }
