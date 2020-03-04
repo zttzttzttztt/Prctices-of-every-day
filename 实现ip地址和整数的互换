@@ -1,0 +1,153 @@
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String ip = sc.nextLine();
+        String it = sc.nextLine();
+       System.out.println(iptoint(ip));
+        inttoip(it);
+    }
+    private static void inttoip(String it){
+        String s=binaryToDecimal2(Integer.parseInt(it));
+        StringBuffer ss=new StringBuffer();
+        if(s.length()<32){
+            for(int i=0;i<32-s.length();i++){
+                ss.append("0");
+            }
+            ss.append(s);
+            s=ss.toString();
+        }
+
+        System.out.println(Strtoip(s));
+    }
+
+  /*  private static void inttoip(String it){
+        StringBuffer s=new StringBuffer();
+        for(int i=0;i<it.length();i++){
+            if(Integer.parseInt(s.toString())<255){
+                s.append(it.charAt(i));
+            }else{
+                Strtoip(s.toString());
+                s=new StringBuffer();
+            }
+        }
+
+    }
+*/
+   private static String Strtoip(String s){
+       int count=0;
+       String[] str=new String[4];
+       StringBuffer ss=new StringBuffer();
+       int n=0;
+       for(int i=0;i<s.length();i++){
+           if(count==8){
+               str[n++]=ss.toString();
+               ss=new StringBuffer();
+               count=0;
+           }else{
+               ss.append(s.charAt(i));
+               count++;
+           }
+       }
+       str[n++]=ss.toString();
+       /*for(int i=0;i<4;i++) {
+           if(str[i].charAt(0)==0){
+               ss=new StringBuffer();
+               int j=0;
+               while(str[i].charAt(j)=='0'){
+                   j++;
+               }
+               while(j<8){
+                   ss.append(str[i].charAt(j));
+               }
+               str[i]=ss.toString();
+           }
+       }*/
+       int[] result=new int[4];
+       for(int i=0;i<4;i++){
+           int length=str[i].length();
+           int sum=0;
+           int num=Integer.parseInt(str[i]);
+           int[] bi=new int[length];
+           int j=0;
+           while(num!=0){
+               bi[j++]=num%10;
+               num=num/10;
+           }
+           for(int k=0;k<bi.length;k++){
+               sum+=bi[k]*2^k;
+           }
+           result[i]=sum;
+       }
+       return result[0]+"."+result[1]+"."+result[2]+"."+result[3];
+   }
+
+
+    private static int iptoint(String ip) {
+        String[] str = new String[4];
+        int k = 0;
+        int i = 0;
+        char c = ip.charAt(2);
+        String s1 = new String();
+        while (i < ip.length()) {
+            if (ip.charAt(i) != c) {
+                s1 = s1 + ip.charAt(i);
+
+            } else {
+                str[k++] = s1.toString();
+                s1 = new String();
+            }
+            i++;
+        }
+        str[k++] = s1.toString();
+
+        StringBuffer s=new StringBuffer();
+        for(int l=0;l<4;l++){
+            int num=Integer.parseInt(str[l].toString());
+            s.append( binaryToDecimal2(num));
+        }
+       return twoToten(s.toString());
+    }
+    private static  int twoToten(String two) {
+        int n = 0;
+        int j = 1;
+        for(int i = two.length() - 1; i >= 0; i--){
+            int x = two.charAt(i) - 48;
+            n = n + x * j;
+            j = j * 2;
+        }
+        return n;
+    }
+
+    public static String binaryToDecimal2(long num) {
+        StringBuffer temp=new StringBuffer();
+        String s=new String();
+        if(num==0){
+             s="00000000";
+            return s;
+        }
+
+         long result=num;
+         while(result>0){
+             if(result%2==0){
+                 temp.append("0");
+
+             }else{
+                 temp.append("1");
+             }
+             result=result/2;
+         }
+         s=temp.toString();
+         StringBuffer ss=new StringBuffer();
+         if(s.length()<8){
+             for(int i=0;i<8-s.length();i++){
+                 ss.append("0");
+             }
+         }
+         ss.append(s);
+         s=ss.toString();
+         return s;
+    }
+
+}
