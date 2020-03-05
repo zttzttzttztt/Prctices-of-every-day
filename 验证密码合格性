@@ -1,0 +1,142 @@
+
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.stream.StreamSupport;
+
+public class Solution{
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        while(sc.hasNextLine()){
+            String s=sc.nextLine();
+            if(s.length()<=8){
+                System.out.println("NG");
+            }else{
+                int count=0;
+                count=Count(s);
+                if(count<3){
+                    System.out.println("NG");
+                }else{
+                  if(DelicateSubString(s)){
+                      System.out.println("OK");
+                  }else{
+                      System.out.println("NG");
+                  }
+                }
+            }
+        }
+    }
+//判断组成字符串的字符种类
+    private static int Count(String s) {
+        int count = 0;
+        int i = 0;
+        HashMap<String,Integer> map=new HashMap<>();
+        while (i < s.length()) {
+            int n = 0;
+            String s0=new String();
+            while (i < s.length()&&s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+               s0="出现数字";
+                if (n == 0) {
+                    if(!map.containsKey(s0)) {
+                        map.put(s0,1);
+                        count++;
+                    }
+                    n = 1;
+                }
+                i++;
+            }
+            n = 0;
+            while (i < s.length()&&s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+                s0="出现小写字母";
+                if (n == 0&&!map.containsKey(s0)) {
+                    count++;
+                    map.put(s0,1);
+                    n = 1;
+                }
+
+                i++;
+            }
+            n = 0;
+            while (i < s.length()&&s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') {
+                s0="出现大写字母";
+                if (n == 0&&!map.containsKey(s0)) {
+                    count++;
+                    map.put(s0,1);
+                    n = 1;
+                }
+
+                i++;
+            }
+            n = 0;
+            while (i < s.length()&&!(s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') && !(s.charAt(i) >= 'a' && s.charAt(i) <= 'z') && !(s.charAt(i) >= '0' && s.charAt(i) <= '9')) {
+                s0="出现其他字符";
+                if (n == 0&&!map.containsKey(s0)) {
+                    count++;
+                    map.put(s0,1);
+                    n = 1;
+                }
+
+                i++;
+            }
+        }
+        return count;
+    }
+    //判断是否有重复子串并且子串长度是否超过2
+    private static boolean DelicateSubString(String  s){
+        int i=0;
+        StringBuffer ss=new StringBuffer();
+        HashMap<StringBuffer,Integer> map=new HashMap<>();
+
+        while(i<s.length()){
+            if(equals(equal(s.charAt(i)),equal(s.charAt(i+1)))){
+                    ss.append(s.charAt(i));
+                    if(i+1==s.length()-1){
+                    ss.append(s.charAt(i));
+                    i++;
+                    }
+            }else {
+                    ss.append(s.charAt(i));
+                    if (map.containsKey(ss)) {
+                        if (ss.length() >2) {
+                            return false;
+                        } else {
+                            map.replace(ss, map.get(ss) + 1);
+                        }
+                    } else {
+                        map.put(ss, 1);
+                    }
+                    ss = new StringBuffer();
+                    if(i+1==s.length()-1){
+                        ss.append(s.charAt(i+1));
+                        i=i+1;
+                    }
+                }
+            i++;
+        }
+        if(map.containsKey(ss)) {
+            if (ss.length() > 2)
+                return false;
+            else
+                return true;
+        } else
+            return true;
+    }
+//判断两个字符是否相等
+    private static boolean equals(int equal, int equal1) {
+        if(equal==equal1)
+            return true;
+        else
+            return false;
+    }
+//判断两个字符是否属于同一类
+    private static int  equal(char c) {
+        if (c >= '0' && c <= '9')
+            return 1;
+        else if (c >= 'a' && c <= 'z')
+            return 2;
+        else if (c >= 'A' && c <= 'Z')
+            return 3;
+        else
+            return 4;
+    }
+
+}
