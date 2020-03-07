@@ -1,0 +1,117 @@
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n=sc.nextInt();
+        int sum=sc.nextInt();
+        int[] A=new int[n];
+        for(int i=0;i<n;i++){
+            A[i]=sc.nextInt();
+        }
+
+
+        System.out.println(getAllSchemeNum(A,sum));
+    }
+    public static int getAllSchemeNum(int[] arr,int sum)
+
+    {
+
+        int count=0;
+
+        //将选择一个数，两个数...n个数时的方案数相加
+
+        for(int num=1;num<=arr.length;num++)
+
+        {
+
+            //getNumIfChosseM是选择m个数时得到的方案数
+
+            count+=getSchemeNumIfChooseM(arr,num,0,sum);
+
+        }
+
+        return count;
+
+    }
+
+    public static int getSchemeNumIfChooseM(int[] arr, int num,int index,int sum)
+
+    {
+
+        int count=0;
+
+
+
+        //如果全部选择完成，则只需判定sum是否为零，如果为零，符合条件，返回1，否则返回0
+
+        if(num==0)
+
+        {
+
+            return sum==0?1:0;
+
+        }
+
+        //剩余要选的数里，第一个数可选的范围为[index,arr.length-num]
+
+        for(int i=index;i<=arr.length-num;i++)
+
+        {
+
+            if(arr[i]<=sum)
+
+                //可选的个数减一，可选的左边界等于当前确定数的小标加1,
+
+                count+=getSchemeNumIfChooseM(arr,num-1,i+1,sum-arr[i]);
+
+        }
+
+
+
+        return count;
+
+    }
+    
+    
+    
+    
+//方法二：有待完善，空间复杂度太高
+
+    private static int fangan(int[] a, int sum) {
+        List<Integer> list=new ArrayList<Integer>();
+        HashMap<List<Integer>,Integer> List1=new HashMap<>();
+        int n=a.length;
+        for(int i=0;i<n-2;i++){
+            for(int j=i+1;j<n-1;j++){
+                if(a[i]+a[j]==sum){
+                    list.add(i);
+                    list.add(j);
+                    list.add(-1);
+                }
+                if(!List1.containsKey(list)){
+                    List1.put(list,1);
+                    j++;
+                }
+                for(int k=j+1;k<n;k++){
+                    if(a[i]+a[j]+a[k]==sum){
+                        list.add(i);
+                        list.add(j);
+                        list.add(k);
+                    }
+                    if(!List1.containsKey(list)){
+                        List1.put(list,1);
+                    }
+                    k++;
+                }
+                j++;
+            }
+            i++;
+        }
+        return List1.size();
+    }
+}
