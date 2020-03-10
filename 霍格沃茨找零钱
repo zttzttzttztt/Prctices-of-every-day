@@ -1,0 +1,96 @@
+//方法一
+import java.util.Scanner;
+
+public class Solution{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String in=sc.nextLine();
+        String[] mon=in.split(" ");
+        int Knut1=montoKnut(mon[0]);
+        int Knut=montoKnut(mon[1]);
+        int leave=Knut-Knut1;
+        System.out.println(Knuttomon(leave));
+    }
+    private static int montoKnut(String mon){
+        String[] money=mon.split("\\.");
+        if(mon=="0"){
+            return 0;
+        }
+        int su=0;
+        for(int i=0;i<money.length;i++){
+            if(i==0)
+                su+=Integer.parseInt(money[i])*17*19;
+            else if(i==1)
+                su+=Integer.parseInt(money[i])*19;
+            else
+                su+=Integer.parseInt(money[i]);
+        }
+        return su;
+    }
+    private  static String Knuttomon(int left){
+        if(left<0){
+            left=-left;
+            String Gallon=left/17/19+"";
+            left=left%(17*19);
+            String Sickle =left/19+"";
+            String Knut=left%19+"";
+            return "-"+(Gallon+"."+Sickle+"."+Knut);
+        }else if(left>0){
+            String Gallon=left/17/19+"";
+            left=left%(17*19);
+            String Sickle =left/19+"";
+            String Knut=left%19+"";
+            return Gallon+"."+Sickle+"."+Knut;
+        }else{
+            return "0"+"."+"0"+"."+"0";
+        }
+
+    }
+}
+//方法二
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        String str = scanner.nextLine();
+
+        String[] eachStr = str.split("\\s+");
+
+        int pmoneyj = Integer.parseInt(eachStr[0].split("\\.")[0]);
+
+        int pmoneys = Integer.parseInt(eachStr[0].split("\\.")[1]);
+
+        int pmoneyk = Integer.parseInt(eachStr[0].split("\\.")[2]);
+
+        int amoneyj = Integer.parseInt(eachStr[1].split("\\.")[0]);
+
+        int amoneys = Integer.parseInt(eachStr[1].split("\\.")[1]);
+
+        int amoneyk = Integer.parseInt(eachStr[1].split("\\.")[2]);
+
+        int psum = pmoneyj*17*29 + pmoneys*29 + pmoneyk;
+
+        int asum = amoneyj*17*29 + amoneys*29 + amoneyk;
+
+        if (asum<psum) {
+
+            System.out.print("-");
+
+        }
+
+        int value = Math.abs(asum-psum);
+
+        System.out.printf("%d.%d.%d\n", value/(17*29), value%(17*29)/29,
+
+                value%29);
+
+    }
+
+}
+
+
