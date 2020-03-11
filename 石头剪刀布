@@ -1,0 +1,37 @@
+import java.util.*;
+import java.io.*;
+public class Solution{
+    final static String[] strs={"B","C","J"};
+    public static void main(String []args)throws IOException{
+        BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
+        int n=Integer.parseInt(bf.readLine());
+        int w=0; int l=0; int balance=0;
+        int []j=new int[3]; int []y=new int[3];
+        for(int i=0;i<n;++i){
+            char []ch=bf.readLine().toCharArray();
+            if((ch[0]=='C'&&ch[2]=='J')||(ch[0]=='J'&&ch[2]=='B')||(ch[0]=='B'&&ch[2]=='C')){
+                w++; if(ch[0]=='B') j[0]++;
+                if(ch[0]=='C')
+                    j[1]++; if(ch[0]=='J')
+                        j[2]++;
+            }else if((ch[0]=='C'&&ch[2]=='B')||(ch[0]=='J'&&ch[2]=='C')||(ch[0]=='B'&&ch[2]=='J')){
+                l++;
+                if(ch[2]=='B')
+                    y[0]++;
+                if(ch[2]=='C')
+                    y[1]++; if(ch[2]=='J') y[2]++;
+            }
+            else balance++;
+        }
+        System.out.println(w+" "+balance+" "+l);
+        System.out.println(l+" "+balance+" "+w);
+        int maxj=0;
+        for(int i=1;i<3;++i){
+            if(j[i]>j[maxj]) maxj=i;
+        }
+        int maxy=0;
+        for(int i=1;i<3;++i){
+            if(y[i]>y[maxy]) maxy=i;
+        }
+        System.out.print(strs[maxj]+" "+strs[maxy]);
+    }
