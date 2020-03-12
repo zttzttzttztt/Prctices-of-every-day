@@ -1,0 +1,40 @@
+// 通过输入和实际输出判断键盘那些按键被损坏了
+import java.util.Scanner;
+import java.util.*;
+
+public class Solution{
+    public static void main(String[] args) {
+        HashSet<Character> map = new HashSet<>();
+        Scanner sc = new Scanner(System.in);
+        String s1 = sc.nextLine();
+        String s2 = sc.nextLine();
+        char[] a=new char[s2.length()];
+        int k=0;
+        char[] arr1 = s1.toCharArray();
+        char[] arr2 = s2.toCharArray();
+        int i = 0;
+        int j = 0;
+        while (i < arr2.length && j < arr1.length) {
+            while (arr1[j] != arr2[i]) {
+                if (!(map.contains(arr1[j]) || map.contains(Character.toLowerCase(arr1[j])) || map.contains(Character.toUpperCase(arr1[j])))) {
+                    map.add(arr1[j]);
+                    a[k++]=arr1[j];
+                }
+                j++;
+            }
+            i++;
+            j++;
+        }
+
+        while (j < arr1.length) {
+            if (!(map.contains(arr1[j]) || map.contains(Character.toLowerCase(arr1[j])) || map.contains(Character.toUpperCase(arr1[j])))) {
+                map.add(arr1[j]);
+                a[k++]=arr1[j];
+            }
+            j++;
+        }
+        for(i=0;i<k;i++){
+            System.out.print(Character.toUpperCase(a[i]));
+        }
+    }
+}
