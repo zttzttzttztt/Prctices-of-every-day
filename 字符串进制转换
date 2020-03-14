@@ -1,0 +1,72 @@
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNextLine()) {
+            String s=in.nextLine();
+            System.out.println(shiliutoshi(s));
+        }
+        
+    }
+
+    private static String   shiliutoshi(String s) {
+        int[] Int=new int[s.length()];
+        for(int j=2;j<s.length();j++){
+            if(s.charAt(j)>='A'&&s.charAt(j)<='Z'){
+                Int[j]=s.charAt(j)-'A'+10;
+            }else
+                Int[j]=Integer.parseInt(s.charAt(j)+"");
+        }
+        int i=0;
+        StringBuilder ss=new StringBuilder();
+        while(i<Int.length){
+            String s1=shiliutoer(Int[i]);
+            ss.append(s1);
+            i++;
+        }
+
+        int a=Integer.parseInt(ss.toString());
+        int[] ss1=new int[ss.length()];
+       return erjinzhitoshi(a)+"";
+
+    }
+
+    private static String shiliutoer(int ch) {
+        Stack<Integer> stack =new Stack<>();
+        String s1="";
+        int size=0;
+        while(ch!=0){
+            size++;
+            stack.push(ch%2);
+            ch=ch/2;
+        }
+        stack.push(ch);
+        int i=0;
+        while(!stack.empty()){
+            s1+=stack.pop();
+            i++;
+        }
+        return s1;
+    }
+    private static String erjinzhitoshi(int a){
+        int size=0;
+        int c=a;
+        while(a!=0){
+            size++;
+            a=a/10;
+        }
+        String s="";
+        int sum=0;
+        int i=0;
+      while(c!=0){
+                sum += (c%10) * Math.pow(2,i);
+                i++;
+                c=c/10;
+        }
+        s=sum+"";
+        return s;
+    }
+}
