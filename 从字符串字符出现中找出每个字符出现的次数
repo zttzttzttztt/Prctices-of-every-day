@@ -1,0 +1,30 @@
+import java.util.HashMap;
+import java.util.Scanner;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNextLine()) {
+            String s=in.nextLine();
+            HashMap<Character,Integer> map=new HashMap<>();
+            String ss="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            int i=0;
+            while(i<ss.length()){
+                map.put(ss.charAt(i),0);
+                i++;
+            }
+            i=0;
+            while(i<s.length()){
+                if(map.containsKey(s.charAt(i))){
+                    map.replace(s.charAt(i),map.get(s.charAt(i))+1);
+                }
+                i++;
+            }
+            i=0;
+            while(i<ss.length()){
+                System.out.println(ss.charAt(i)+"="+map.get(ss.charAt(i)));
+                i++;
+            }
+        }
+    }
+}
