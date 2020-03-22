@@ -1,0 +1,119 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+/**
+ * Created by Feng on 2020/2/20 12:31
+ * CurrentProject's name is java8
+ * 字符串加解密
+ */
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String line;
+        while ((line = bufferedReader.readLine()) != null){
+            // 加密
+            System.out.println(encrypt(line));
+
+            // 再接收一行
+            line = bufferedReader.readLine();
+            // 解密
+            System.out.println(unEncrypt(line));
+        }
+    }
+
+    /**
+     * 加密方法
+     * @param password 原始密码
+     * @return 加密后的密码
+     */
+    private static String encrypt(String password){
+        StringBuilder sb = new StringBuilder();
+
+        char[] chars = password.toCharArray();
+        for (char aChar : chars) {
+            // 小写字母
+            if(aChar >= 'a' && aChar <= 'z'){
+                if(aChar == 'z'){
+                    sb.append('A');
+                } else {
+                    sb.append((char)(aChar + 1 - 32));
+                }
+                continue;
+            }
+
+            // 大写字母
+            if(aChar >= 'A' && aChar <= 'Z'){
+                if(aChar == 'Z'){
+                    sb.append('a');
+                } else {
+                    sb.append((char)(aChar + 1 + 32));
+                }
+                continue;
+            }
+
+            // 数字
+            if(aChar >= '0' && aChar <= '9'){
+                if(aChar == '9'){
+                    sb.append('0');
+                } else {
+                    sb.append((char)(aChar + 1));
+                }
+                continue;
+            }
+
+            // 其他字符
+            sb.append(aChar);
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * 解密
+     * @param password 加密的密码
+     * @return 真实密码（解密后的密码）
+     */
+    private static String unEncrypt(String password){
+        StringBuilder sb = new StringBuilder();
+
+        char[] chars = password.toCharArray();
+        for (char aChar : chars) {
+            // 小写字符
+            if(aChar >= 'a' && aChar <= 'z'){
+                if(aChar == 'a'){
+                    sb.append('Z');
+                } else {
+                    sb.append((char)(aChar - 32 - 1));
+                }
+                continue;
+            }
+
+            // 大写字符
+            if(aChar >= 'A' && aChar <= 'Z'){
+                if(aChar == 'A'){
+                    sb.append('z');
+                } else {
+                    sb.append((char)(aChar + 32 -1));
+                }
+                continue;
+            }
+
+            // 数字
+            if(aChar >= '0' && aChar <= '9'){
+                if(aChar == '0'){
+                    sb.append('9');
+                } else {
+                    sb.append((char)(aChar - 1));
+                }
+                continue;
+            }
+
+            // 其他字符
+            sb.append(aChar);
+        }
+
+        return sb.toString();
+    }
+}
