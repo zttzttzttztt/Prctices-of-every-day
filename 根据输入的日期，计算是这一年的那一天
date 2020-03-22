@@ -1,0 +1,46 @@
+
+import java.util.Scanner;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNextInt()) {// 注意，如果输入是多个测试用例，请通过while循环处理多个测试用例
+            int a = in.nextInt();
+            int b = in.nextInt();
+            int  c=in.nextInt();
+            System.out.println(iConverDateToday(a,b,c));
+        }
+    }
+    public static int iConverDateToday(int year,int month,int day){
+        int daySum=getOutDay(year,month);
+        return daySum+day;
+    }
+    public static int getOutDay(int year,int month){
+        int Sumday=0;
+        for(int i=1;i<month;i++){
+            switch(i){
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    Sumday+=31;  break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    Sumday+=30;  break;
+                case 2:
+                {
+                    if(year%4==0&&year%100!=0||year%400==0){
+                        Sumday+=29;  break;
+                    }else{
+                        Sumday+=28;  break;
+                    }
+                }
+            }
+        }
+        return Sumday;
+    }
+}
