@@ -1,0 +1,29 @@
+import java.util.HashSet;
+import java.util.Scanner;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNextInt()) {// 注意，如果输入是多个测试用例，请通过while循环处理多个测试用例
+            int n=in.nextInt();
+            int m=in.nextInt();
+            int i=1;
+            int min=m<=n?m:n;
+            HashSet<Integer> set=new HashSet<Integer>();
+            while(i<=min){
+                if(m-i<min&&m-i!=i){
+                    if(m==i){
+                        System.out.println(i);
+                    }else{
+                        if(!(set.contains(i)||set.contains(m-i))){
+                            System.out.println(i+" "+(m-i));
+                            set.add(i);
+                            set.add(m-i);
+                        }
+                    }
+                }
+                i++;
+            }
+
+        }
+    }
+}
