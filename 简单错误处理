@@ -1,0 +1,47 @@
+import java.util.*;
+public class Main {
+ 
+    static Map<String, Integer> fileOriginName;
+    static List<Node> nodes = new ArrayList<>();
+ 
+    static class Node{
+        String name;
+        int count;
+ 
+        public Node(String name){
+            this.name = name;
+            this.count = 1;
+        }
+ 
+        public void add(int value){
+            count += value;
+        }
+    }
+ 
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        fileOriginName = new HashMap<>();
+        String fileName;
+        int count = 0, index;
+        while(input.hasNext()){
+            fileName = input.nextLine();
+            fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
+            if(fileOriginName.containsKey(fileName)){
+                nodes.get(fileOriginName.get(fileName)).add(1);
+            } else{
+                fileOriginName.put(fileName, count++);
+                index = fileName.indexOf(' ');
+                fileName = index > 16 ? fileName.substring(index - 16) : fileName;
+                nodes.add(new Node(fileName));
+            }
+        }
+        Collections.sort(nodes, (node1, node2) -> {
+            return node2.count - node1.count;
+        });
+        Node node;
+        for(int i = 0; i < Math.min(8, nodes.size()); i++){
+            node = nodes.get(i);
+            System.out.println(node.name + " " + node.count);
+        }
+    }
+}
