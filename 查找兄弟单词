@@ -1,0 +1,56 @@
+import java.util.*;
+
+/**
+ * Created by Feng on 2020/2/18 14:23
+ * CurrentProject's name is java8
+ * 查找兄弟单词
+ */
+public class Main {
+     /**
+     * 是兄弟单词
+     * @param str1 单词1
+     * @param str2 单词2
+     * @return 是兄弟就返回 true
+     */
+    private static boolean isBrother(String str1, String str2){
+        char[] chars1 = str1.toCharArray();
+        char[] chars2 = str2.toCharArray();
+
+        Arrays.sort(chars1);
+        Arrays.sort(chars2);
+
+        return new String(chars1).equals(new String(chars2)) && !str1.equals(str2);
+    }
+
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        while(input.hasNextLine()){
+            String line = input.nextLine();
+            String[] words = line.split(" ");
+
+            // 要查的单词
+            String item = words[words.length - 2];
+            // 兄弟单词列表
+            List<String> list = new ArrayList<>();
+            for (int i = 1; i < words.length - 2; i++) {
+                if(isBrother(words[i], item)){
+                    list.add(words[i]);
+                }
+            }
+
+            // 排序：字典顺序
+            list.sort(String::compareTo);
+            // 兄弟单词的个数
+            System.out.println(list.size());
+            int index = Integer.parseInt(words[words.length - 1]);
+            // 需要判断
+            if(!list.isEmpty() && index <= list.size()){
+                System.out.println(list.get(index - 1));
+            }
+        }
+    }
+    
+}
+
+原文链接：https://blog.csdn.net/fbb360java/article/details/104376161
