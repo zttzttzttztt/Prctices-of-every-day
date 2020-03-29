@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+public class Main {
+    public static void main(String[] args) {
+        int mat[][]={{1,2},{3,4}};
+        int n=2;int m=2;
+        System.out.println(printMatrix(mat,m,n));
+    }
+    private static  ArrayList<Integer> printMatrix(int [][] matrix,int m,int n) {
+        ArrayList<Integer> al = new ArrayList<>();
+        int row = n, col = m;
+        int left = 0, right = col - 1;
+        int top = 0, bottom = row - 1;
+        if(matrix == null){ return null;
+        }
+        while(left <= right && top <= bottom){
+            //从左到右打印
+            for(int i = left; i <= right; i++){
+                al.add(matrix[top][i]);
+            }
+            //从上到下打印
+            if(top != bottom){
+                for(int i = top + 1;
+                    i <= bottom; i++){
+                    al.add(matrix[i][right]);
+                }
+            }
+
+        //从右到左打印
+        if(top != bottom){
+            for(int i = right - 1; i >= left; i--){
+                al.add(matrix[bottom][i]);
+            }
+        }
+    //从下到上打印
+    if(left != right){
+                for(int i = bottom - 1; i > top; i--){
+                    al.add(matrix[i][left]);
+                }
+            }
+            left++;
+            right--;
+            top++;
+            bottom--;
+        }
+        return al;
+    }
+}
