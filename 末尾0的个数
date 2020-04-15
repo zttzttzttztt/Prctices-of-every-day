@@ -1,0 +1,22 @@
+/* 算法思想：最简单的就是**分解质因数** 
+
+n! = n * (n-1) * (n-2) * (n-3) ... * 3 * 2 * 1
+对其中的每一个数进行分解因数 末尾的0是由5和2形成的，2、6、8都可以分解出2，
+所以2的个数肯定远远大于5的个数，所以解题关键就在于看每一个数的因数中有多少个5 */
+
+import java.util.*; 
+public class Main{ 
+  public static void main(String[] args){ 
+    Scanner sc = new Scanner(System.in); 
+    int n = sc.nextInt(); 
+    int count = 0; 
+    for(int i = n ; i>=5 ; i--){ 
+      int tmp = i; //只要该数是5的倍数，就一直进行分解 
+      while(tmp % 5 == 0){ 
+        count++; //这个数可能不止一个因数5
+        tmp = tmp / 5; 
+      }
+    } 
+    System.out.println(count); 
+  } 
+} 
