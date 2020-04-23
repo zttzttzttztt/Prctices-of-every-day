@@ -1,0 +1,25 @@
+public class aixin {
+    public static void main(String[] args) {
+
+        int n=4;
+        StringBuilder a=new StringBuilder("1234");
+        int count=zuhe(a.toString());
+      System.out.println(count);
+    }
+
+    private static int zuhe(String a) {
+       StringBuilder map=new StringBuilder(a);
+        int count=1;int k=0;
+        if(map.length()==1) {
+            count = count*map.length();
+            return count;
+        }
+        else{
+            int l=map.length();
+            map.delete(k,k+1);
+            k++;
+            return l*zuhe(map.toString());
+        }
+
+    }
+}
