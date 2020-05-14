@@ -1,0 +1,143 @@
+服务器端
+package com.car.client;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+
+public class MyClientSocker1
+{
+public static void main(String[]args) throws IOException
+{
+System.out.println(“測試一下”);
+//创建Socket的客户端对对象
+Socket socket = new Socket();
+//连接服务器，将客户端也可以绑定端口
+socket.connect(new InetSocketAddress(“127.0.0.1”,8889));
+OutputStream outputStream = socket.getOutputStream();
+outputStream.write(“User/login?username=admin&password=admin123 | Person/login?username=admin&password=admin123”.getBytes());
+outputStream.close();
+socket.close();
+}
+}
+服务器端 调用方法
+package com.car.socket;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class MyServiceSocket1
+{
+public static void main(String[] args)
+{
+ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+/创建服务器端的socket对象/
+try
+{
+ServerSocket serverSocket = new ServerSocket();
+serverSocket.bind(new InetSocketAddress(8889));
+while (true)
+{
+/服务器端绑定端口/
+Socket socket = serverSocket.accept();
+service.execute(new Runnable()
+{
+@Override
+public void run()
+{
+System.out.println(“有客户连接”+ socket.getRemoteSocketAddress() +“连接到服务器…”);
+InputStream inputStream = null ;
+try
+{
+inputStream = socket.getInputStream();
+byte [] buf = new byte[1024];
+int len ;
+//调用read方法返回自阻塞
+while ((len = inputStream.read(buf))!= -1 )
+{
+String str = new String(buf,0,len);
+/String[] split = str.split("=");
+System.out.println(split[4]);
+String[] split1 = split[3].split("&");
+System.out.println(split1[0]);/
+String[] split = str.split("[/?=& |]");
+String s = split[0];
+Map<String,String> map = new HashMap<String, String>();
+for(int i = 0 ; i < split.length;i++)
+{
+System.out.println(Arrays.toString(split));
+}
+map.put(split[2],split[3]);
+map.put(split[4],split[5]);
+String username = map.get(split[2]);
+String password = map.get(split[4]);
+//String username =split[4];
+//String password =split[6];
+
+try { 
+Class myClass = Class.forName(this.getClass().getPackage().getName() + "." + s); 
+Object obj = myClass.newInstance(); 
+Method method = myClass.getDeclaredMethod("login",String.class,String.class);
+method.invoke(obj,username,password);
+} 
+catch (ClassNotFoundException e) {
+e.printStackTrace();
+} 
+catch (IllegalAccessException e) { 
+e.printStackTrace();
+} catch (InstantiationException e) {
+e.printStackTrace(); 
+} catch (NoSuchMethodException e) { 
+e.printStackTrace();
+} catch (InvocationTargetException e) { 
+e.printStackTrace(); 
+}
+}
+} catch (IOException e) { 
+e.printStackTrace();
+}finally { 
+try { 
+if (inputStream != null) { 
+inputStream.close();
+inputStream = null ; 
+} 
+} catch (IOException e) { 
+e.printStackTrace(); 
+}
+}
+} 
+}
+);
+}
+} catch (IOException e) {
+e.printStackTrace();
+}
+} 
+}
+class User
+{
+public void login(String username , String password)
+{
+System.out.println("=你好世界=");
+}
+}
+class Person
+{
+public void login(String username , String password)
+{
+System.out.println("=你好=");
+}
+}
+
+
