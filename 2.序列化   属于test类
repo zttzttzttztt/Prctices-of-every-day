@@ -1,0 +1,15 @@
+
+
+ObjectOutputStream oos;
+byte[] bytes = null;
+try {
+oos = new ObjectOutputStream(baos);
+oos.writeObject(m);
+bytes = baos.toByteArray();
+oos.close();
+System.out.println("序列化的数据 是字节数组：" + bytes);
+} catch (Exception e) {
+e.printStackTrace();
+}
+return bytes;
+}
