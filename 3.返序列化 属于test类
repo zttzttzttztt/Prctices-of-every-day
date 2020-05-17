@@ -1,0 +1,16 @@
+
+public Model frombyte(byte[] bytes) {
+
+
+ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+ObjectInputStream ois;
+Model retModel = null;
+try {
+ois = new ObjectInputStream(bais);
+bais.close();
+retModel = (Model) ois.readObject();
+} catch (Exception e) {
+e.printStackTrace();
+}
+return retModel;
+}
