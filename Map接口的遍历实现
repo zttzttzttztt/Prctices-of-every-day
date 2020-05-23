@@ -1,0 +1,77 @@
+package Test;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+public class MapForeach {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void main(String[] args) {
+		HashMap map = new HashMap();
+		Student student1 = new Student("001","汤小强");
+		Student student2 = new Student("002","汤大强");
+		Student student3 = new Student("003","汤很强");
+		Student student4 = new Student("004","汤最强");
+		map.put(student1.getID(), student1);
+		map.put(student2.getID(), student2);
+		map.put(student3.getID(), student3);
+		map.put(student4.getID(), student4);
+		
+		System.out.println("==========遍历方式一==========");
+		Set keySet = map.keySet();
+		Iterator iterator = keySet.iterator();
+		while(iterator.hasNext()){
+			Object key = iterator.next();
+			System.out.println(key+"---"+map.get(key));
+		}
+		
+		
+		System.out.println("==========遍历方式二==========");
+		for (Object key1 : keySet) {
+			System.out.println(key1+"---"+map.get(key1));
+		}
+		
+		System.out.println("==========遍历方式三==========");
+		Set entrySet = map.entrySet();
+		Iterator iterator2 = entrySet.iterator();
+		while(iterator2.hasNext()){
+			Map.Entry node = (Map.Entry)iterator2.next();
+			System.out.println(node.getKey()+"---"+node.getValue());
+		}
+		
+		System.out.println("==========遍历方式四==========");
+		for (Object object : entrySet) {
+			Map.Entry node2 = (Map.Entry)object;
+			System.out.println(node2.getKey()+"---"+node2.getValue());
+		}
+	}
+}
+
+
+class Student{
+	private String name;
+	private String ID;
+	public Student(String iD, String name ) {
+		super();
+		this.name = name;
+		ID = iD;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getID() {
+		return ID;
+	}
+	public void setID(String iD) {
+		ID = iD;
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "ID ="+ID+" name="+name;
+	}
+}
