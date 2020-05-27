@@ -1,0 +1,60 @@
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+public class aixin {
+    static class Flight {
+        public int P, Q, K, X, Y;
+        public Flight(int P, int Q) {
+            this.P = Math.min(P, Q); this.Q = Math.max(P, Q);
+        }
+        public Flight(int P, int Q, int K, int X, int Y) {
+            this.P = Math.min(P, Q);
+            this.Q = Math.max(P, Q);
+            this.K = K; this.X = X;
+            this.Y = Y;
+        }
+        @Override public boolean equals(Object o) {
+            Flight f = (Flight) o;
+            return this.P == f.P && this.Q == f.Q;
+        }
+
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner sc = new Scanner(System.in);
+        String s[] = sc.nextLine().split(" ");
+        int N = Integer.parseInt(s[0]);
+        int M = Integer.parseInt(s[1]);
+        ArrayList<Flight> flights = new ArrayList<Flight>();
+        int f[] = new int[N + 1];
+        for (int i = 0; i < M; i++) {
+            s = sc.nextLine().split(" ");
+            int P = Integer.parseInt(s[0]);
+            int Q = Integer.parseInt(s[1]);
+            int K = Integer.parseInt(s[2]);
+            int X = Integer.parseInt(s[3]);
+            int Y = Integer.parseInt(s[4]);
+            Flight flight = new Flight(P, Q, K, X, Y);
+            flights.add(flight);
+        }
+        for (int i = 2; i <= N; i++) {
+            f[i] = Integer.MAX_VALUE;
+            for (int j = 1; j < i; j++) {
+                Flight flight = new Flight(j, i);
+                int index = flights.indexOf(flight);
+                if (index != -1) {
+                    flight = flights.get(index);
+                    if (f[j] + flight.K < flight.X || f[j] > flight.Y) {
+                        f[i] = Math.min(f[i], f[j] + flight.K + 1);
+                    }
+                    else {
+                        f[i] = Math.min(f[i], flight.Y + flight.K + 1);
+                    }
+                }
+            }
+        }
+        System.out.println(f[N]);
+    }
+}
