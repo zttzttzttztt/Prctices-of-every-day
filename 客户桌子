@@ -1,0 +1,41 @@
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class aixin {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s[] = sc.nextLine().split(" ");
+        int n= Integer.parseInt(s[0]);
+        int m = Integer.parseInt(s[1]);
+        int[] zhuoziSize=new int[n];
+        String s1[] = sc.nextLine().split(" ");
+        for(int i = 0; i < n; i++){
+           zhuoziSize[i]=Integer.parseInt(s1[i]);
+        }
+
+        String[] kehu=new String[m];
+        int[] renshu=new int[m];
+        for(int i=0;i<m;i++){
+            kehu[i]= sc.nextLine();
+        }
+        System.out.println(Consume(zhuoziSize,kehu));
+    }
+
+    private static int  Consume(int[] zhuoziSize,String[] kehu) {
+        int sum=0;
+        Sort(zhuoziSize);
+        //从第一个客户开始，依次遍历
+        //找到第一个客户适合大小的桌子，sum加上预算金额
+        //if客户总数大于桌子数或者客户的人数大于桌子所能容纳的量，抱歉这个客户不发用餐
+        //直到最后一个客户
+        for(int i=0;i<kehu.length;i++){
+            String[] s0=kehu[i].split(" ");
+            int b=Integer.parseInt(s0[0]);
+            int c=Integer.parseInt(s0[1]);
+        }
+
+    }
+
+
+}
