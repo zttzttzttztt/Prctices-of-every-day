@@ -1,0 +1,34 @@
+
+
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] a=new int[n];
+        String s=in.nextLine();
+        String[] s1=s.split(" ");
+        for(int i=0;i<n;i++){
+            a[i]=Integer.parseInt(s1[i]);
+        }
+        int m=in.nextInt();
+        System.out.println(chazhao(a,0,n,m));
+    }
+
+    private static int  chazhao(int[] a, int left, int right, int m) {
+        if(left>right||a[left]>m||a[right]<m){
+            return -1;
+        }
+        int mid=(left+right)/2;
+        if(a[mid]>m){
+            return chazhao(a,left,mid-1,m);
+        }else if(a[mid]<m){
+            return chazhao(a,mid+1,right,m);
+        }else{
+            return mid;
+        }
+    }
+    
+}
