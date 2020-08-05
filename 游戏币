@@ -1,0 +1,26 @@
+
+import java.io.*;
+import java.util.*;
+public class Main {
+        public static void main(String args[])
+        {
+            Scanner in =new Scanner(System.in);
+            while(in.hasNextInt()) {
+                int n = in.nextInt();
+                int m = in.nextInt();
+                int count = 0;
+                int x1 = 0;
+                int y2 = 0;
+                int z5 = 0;
+
+
+                for (z5 = 0; z5 <= n; z5++) {
+                    x1 = 3 * z5 + 2 * n - m;
+                    y2 = m - 4 * z5 - n;
+                    if (Math.round(x1) == x1 && Math.round(y2) == y2 && x1 >= 0 && y2 >= 0)
+                        count++;
+                }
+                System.out.println(count);
+            }
+        }
+    }
