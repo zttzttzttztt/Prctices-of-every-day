@@ -1,0 +1,66 @@
+//方法一：
+public class Main{
+    public static void main(String[] args) {
+        Scanner in=new Scanner(System.in);
+        String A=in.nextLine();
+        String B=in.nextLine();
+        System.out.println(huiwen(B,A));
+    }
+
+    private static int  huiwen(String B, String A) {
+        int count=0;
+        for(int i=0;i<A.length()+1;i++){
+            String a=A.substring(0,i);
+            String b=A.substring(i,A.length());
+            String c=a+B+b;
+            c=c.trim();
+            String d=reverse(c);
+            if(d.equals(c)){
+                count++;
+            }
+        }
+       return count;
+    }
+
+    private static String reverse(String c) {
+        char[] a=c.toCharArray();
+        String b="";
+        for(int i=a.length-1;i>=0;i--){
+            b=b+a[i];
+        }
+        return b;
+    }
+}
+
+
+//方法二：
+import java.util.*;
+public class Main {
+    public static boolean isHuiwen(String s) {
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        int count = 0;
+        for (int i = 0; i <= str1.length(); i++) {
+            StringBuilder sb = new StringBuilder(str1);
+            sb.insert(i, str2);
+            if (isHuiwen(sb.toString())) {
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
+}
