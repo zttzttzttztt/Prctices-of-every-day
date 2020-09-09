@@ -1,0 +1,32 @@
+
+//用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型
+//方法一：两个栈分别是in和out ，in用来入栈，out用来出栈，
+//pop时，如果out为空，则把in中的元素全部取出依次放入out中，若不为空，则先把out中的元素出栈在将in中的元素依次放入out中，在出栈
+//push时，全部放入in中
+/*
+public class Main{
+    public static void main(String[] args) {
+        Stack<Integer> in =new Stack<>();
+        Stack<Integer> out =new Stack<>();
+        Scanner scanner =new Scanner(System.in);
+        while(scanner.hasNextInt()){
+           int a=scanner.nextInt();
+            push1(in,a);
+        }
+        pop1(in,out);
+
+    }
+    public static int pop1(Stack<Integer> in,Stack<Integer> out){
+        if(in.empty()&&out.empty()){
+            throw new RuntimeException("Queue is empty!");
+        }
+        if(out.isEmpty()){
+            while (!in.isEmpty()) {
+                out.push(in.pop());
+            }
+        }
+        return out.pop();
+    }
+    public static  void  push1(Stack<Integer> in,int a) {
+        in.push(a);
+    }
