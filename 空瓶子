@@ -1,0 +1,30 @@
+import java.util.*;
+public class  Main{
+    public static void main(String[] args){
+        Scanner in=new Scanner(System.in);
+        while(in.hasNextInt()){
+            int n=in.nextInt();
+            if(n!=0){
+               System.out.println(MostWater(n));
+            }else
+                break;
+
+        }
+    }
+    public static int MostWater(int n){
+        int  He=0;
+        int  KO=n;
+        int  KY=0;
+        int sum=0;
+        while(KO>2){
+            sum=(int)(KO/3)+sum;
+            He=(int)(KO/3);
+            KY=KO%3;
+            KO=He+KY;
+        }
+        if(KO==2){
+            sum=sum+1;
+        }
+        return sum;
+    }
+}
